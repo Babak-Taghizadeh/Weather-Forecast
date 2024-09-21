@@ -29,7 +29,7 @@ const LogoTime = () => {
     const intervalId = setInterval(() => {
       updateTime();
       console.log("rendered");
-    }, 60000);
+    }, 3000);
     return () => clearInterval(intervalId);
   }, []);
 
