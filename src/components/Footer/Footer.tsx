@@ -1,7 +1,10 @@
+import ForecastCard from "./forecastCard"
 
 const Footer = () => {
   return (
-    <div>Footer</div>
+    <div className="mb-6">
+      <ForecastCard />
+    </div>
   )
 }
 
