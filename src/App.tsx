@@ -4,7 +4,7 @@ import {
   UseQueryResult,
 } from "@tanstack/react-query";
 import { useState, createContext, useMemo } from "react";
-import Footer from "./components/Footer/MultiQuerisHourForecast";
+import MultiQuerisHourForecast from "./components/Footer/MultiQuerisHourForecast";
 import Header from "./components/Header/Header";
 import Main from "./components/Main/Main";
 import { FetchedData } from "./types/fetchedData";
@@ -37,7 +37,7 @@ function App() {
         <div className="min-h-dvh flex flex-col text-white justify-between items-center bg-gradient-to-b from-[#000000] to-[#434343]">
           <Header />
           <Main />
-          <Footer />
+          <MultiQuerisHourForecast />
         </div>
         <ReactQueryDevtools initialIsOpen={false} />
       </QueryClientProvider>

@@ -25,7 +25,7 @@ const fetchForecastByHour = async (
   return data;
 };
 
-const Footer = () => {
+const MultiQuerisHourForecast = () => {
   const { weatherData } = useContext(WeatherContext);
   const selectedCity = weatherData?.data?.location.name
 
@@ -50,7 +50,7 @@ const Footer = () => {
   }) as UseQueryResult<Forecast>[];
 
   return (
-    <div className="w-full mb-6 flex justify-evenly">
+    <div className="w-full mb-16 flex justify-evenly">
       {weatherForecastQueries.map((query, index) => {
         const { time, condition, temp_c } =
           query.data?.forecast?.forecastday?.[0]?.hour?.[0] || {};
@@ -61,7 +61,7 @@ const Footer = () => {
           return (
             <div
               key={index}
-              className="flex flex-col items-center justify-center h-[110px] w-[100px]  bg-gradient-to-t from-[#243949] to-[#517fa4] rounded-xl py-2 px-3"
+              className="flex flex-col items-center justify-center h-[110px] w-[100px]  bg-gradient-to-t from-[#243949] to-[#517fa4] rounded-xl py-2 px-3 "
             >
               <h1>{query.error.message}</h1>
             </div>
@@ -81,7 +81,7 @@ const Footer = () => {
         return (
           <div
             key={index}
-            className="flex flex-col items-center justify-between h-[110px] w-[100px] bg-gradient-to-t from-[#243949] to-[#517fa4] rounded-xl py-2 px-3"
+            className="flex flex-col items-center justify-between h-[110px] w-[100px] bg-gradient-to-t from-[#243949] to-[#517fa4] rounded-xl py-2 px-3 shadow-[0_35px_40px_-15px_rgba(55,190,151,0.3)]"
           >
             <h1 className="text-xl">{displayTime}</h1>
             <img
@@ -96,4 +96,4 @@ const Footer = () => {
     </div>
   );
 };
-export default Footer;
+export default MultiQuerisHourForecast;

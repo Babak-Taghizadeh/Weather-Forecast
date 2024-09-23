@@ -21,43 +21,48 @@ const Search = () => {
     return data;
   };
 
-  const { isFetching, isLoading, isError, error, data, refetch } =
-    useQuery({
-      queryKey: ["WeatherData"],
-      queryFn: fetchData,
-      // enabled: false,
-    });
+  const { isFetching, isLoading, isError, error, data, refetch } = useQuery({
+    queryKey: ["WeatherData"],
+    queryFn: fetchData,
+    // enabled: false,
+  });
 
+  useEffect(() => {
+    setWeatherData({
+      data,
+      isLoading,
+      isError,
+      error,
+      isFetching,
+    } as UseQueryResult<FetchedData>);
+  }, [data, isLoading, isError, error, isFetching, setWeatherData]);
 
-    useEffect(() => {
-      setWeatherData({
-        data,
-        isLoading,
-        isError,
-        error,
-        isFetching,
-      } as UseQueryResult<FetchedData>);
-    }, [data, isLoading, isError, error, isFetching, setWeatherData]);
-  
-    const handleCityChange = debounce((value: string) => {
-      setCity(value);
-    }, 150);
+  const handleCityChange = debounce((value: string) => {
+    setCity(value);
+  }, 150);
 
   if (isError && error instanceof Error) {
     return (
       <div className="flex flex-col items-center gap-4">
         <h1>Error: {error.message}</h1>
         <button
-        className="w-1/2 rounded-md text-xl p-2 bg-blue-500"
-        onClick={ () => {
-          setCity("tabriz")
-          refetch();
-        }}>Try again</button>
+          className="w-1/2 rounded-md text-xl p-2 bg-blue-500"
+          onClick={() => {
+            setCity("tabriz");
+            refetch();
+          }}
+        >
+          Try again
+        </button>
       </div>
     );
   }
   return (
     <section className="flex flex-col gap-6 items-center">
+      <h1 className="flex items-center gap-2 text-4xl mb-8">
+        <IoLocationOutline />
+        <span>{data?.location.name}</span>
+      </h1>
       <div className="relative">
         <IoSearch
           size={30}
@@ -81,10 +86,6 @@ const Search = () => {
       >
         Search
       </button>
-      <h1 className="flex items-center gap-2 text-4xl">
-        <IoLocationOutline />
-        <span>{data?.location.name}</span>
-      </h1>
     </section>
   );
 };
