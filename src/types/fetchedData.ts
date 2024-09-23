@@ -1,3 +1,9 @@
+import { UseQueryResult } from "@tanstack/react-query";
+
+export interface WeatherContextType {
+  weatherData: UseQueryResult<FetchedData>;
+  setWeatherData: (data: UseQueryResult<FetchedData>) => void;
+}
 interface Condition {
     icon: string;
     text: string;
@@ -17,8 +23,22 @@ interface Condition {
     feelslike_c: number;
     pressure_in: number;
   }
+
+interface HourlyForecast {
+    time: string;
+    condition: Condition;
+    temp_c: number;
+  }
+
+  export interface Forecast {
+    forecast: {
+      forecastday: Array<{
+        hour: HourlyForecast[];  // Array of hourly forecast objects
+      }>;
+    };
+  }
   
   export interface FetchedData {
-    current: CurrentWeather; 
     location: Location; 
+    current: CurrentWeather;
   }

@@ -1,26 +1,36 @@
-import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
+import {
+  QueryClientProvider,
+  QueryClient,
+  UseQueryResult,
+} from "@tanstack/react-query";
 import { useState, createContext, useMemo } from "react";
-import Footer from "./components/Footer/Footer";
+import Footer from "./components/Footer/MultiQuerisHourForecast";
 import Header from "./components/Header/Header";
 import Main from "./components/Main/Main";
 import { FetchedData } from "./types/fetchedData";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { WeatherContextType } from "./types/fetchedData";
 
 const queryClient = new QueryClient();
-export const WeatherContext = createContext<{
-  weatherData: FetchedData;
-  setWeatherData: (weatherData: FetchedData) => void;
-}>({ weatherData: {} as FetchedData, setWeatherData: () => {} });
+
+export const WeatherContext = createContext<WeatherContextType>({
+  weatherData: {} as UseQueryResult<FetchedData>,
+  setWeatherData: () => {},
+});
 
 function App() {
-  const [weatherData, setWeatherData] = useState<FetchedData>(
-    {} as FetchedData
+  const [weatherData, setWeatherData] = useState<UseQueryResult<FetchedData>>(
+    {} as UseQueryResult<FetchedData>
   );
 
-  const weatherContextValue = useMemo(() => ({
-    weatherData,
-    setWeatherData,
-  }), [weatherData]);
-  
+  const weatherContextValue = useMemo(
+    () => ({
+      weatherData,
+      setWeatherData,
+    }),
+    [weatherData]
+  );
+
   return (
     <WeatherContext.Provider value={weatherContextValue}>
       <QueryClientProvider client={queryClient}>
@@ -29,6 +39,7 @@ function App() {
           <Main />
           <Footer />
         </div>
+        <ReactQueryDevtools initialIsOpen={false} />
       </QueryClientProvider>
     </WeatherContext.Provider>
   );
